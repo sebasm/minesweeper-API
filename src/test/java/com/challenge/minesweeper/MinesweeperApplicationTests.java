@@ -28,7 +28,7 @@ class MinesweeperApplicationTests {
 		Integer minesCount = 0;
 		for(int i = 0; i < boardSize; i++) {
 			for(int j = 0; j < boardSize; j++) {
-				if(board.getCells()[i][j].getHasBomb()) {
+				if(board.getCells().get(i).get(j).getHasBomb()) {
 					minesCount++;
 				}
 			}

@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.challenge.minesweeper.dto.GameDto;
 import com.challenge.minesweeper.dto.NewGameDto;
 import com.challenge.minesweeper.entity.Game;
+import com.challenge.minesweeper.mapper.GameDtoMapper;
 import com.challenge.minesweeper.service.GameService;
 
 @RestController
@@ -19,12 +21,16 @@ public class GameController {
 	@Autowired
 	GameService gameService;
 	
+	@Autowired
+	GameDtoMapper gameDtoMapper;
+	
 	@RequestMapping(value = "/new-game", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public Game newGame(@RequestBody(required = true) NewGameDto newGame) {
+	public GameDto newGame(@RequestBody(required = true) NewGameDto newGame) {
 
 		Game game = gameService.newGame(newGame.getPlayerName(), newGame.getSize(), newGame.getMines());
-		return game;
+		GameDto gameDto = gameDtoMapper.map(game);
+		return gameDto;
 
 	}
 

@@ -1,22 +1,24 @@
 package com.challenge.minesweeper.entity;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Board {
 	
 	private Integer size;
 	private Integer mines;
-	private Cell[][] cells;
+	private LinkedList<LinkedList<Cell>> cells;
 	
 	public Board(Integer size, Integer mines) {
 		
 		this.size = size;
 		this.mines = mines;
-		this.cells = new Cell[size][size];
+		this.cells = new LinkedList<LinkedList<Cell>>();
 		
 		for(int i = 0; i < size; i++) {
+			cells.add(new LinkedList<Cell>());
 			for(int j = 0; j < size; j++) {
-				cells[i][j] = new Cell();
+				cells.get(i).add(new Cell());
 			}
 		}
 		
@@ -25,8 +27,8 @@ public class Board {
 		while(remainingMinesToAssign > 0) {
 			int x = random.nextInt(size);
 			int y = random.nextInt(size);
-			if(!cells[x][y].getHasBomb()) {
-				cells[x][y].setHasBomb(true);
+			if(!cells.get(x).get(y).getHasBomb()) {
+				cells.get(x).get(y).setHasBomb(true);
 				remainingMinesToAssign--;
 			}
 		}
@@ -48,13 +50,16 @@ public class Board {
 		this.mines = mines;
 	}
 
-	public Cell[][] getCells() {
+	public LinkedList<LinkedList<Cell>> getCells() {
 		return cells;
 	}
 
-	public void setCells(Cell[][] cells) {
+	public void setCells(LinkedList<LinkedList<Cell>> cells) {
 		this.cells = cells;
 	}
+
+	
+	
 	
 	
 
