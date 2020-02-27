@@ -8,6 +8,7 @@ public class Cell {
 
 	private Boolean hasBomb;
 	private CellStatus status;
+	private Integer bombsArround;
 	
 	public Cell() {
 		this.status = CellStatus.INITIAL;
@@ -34,6 +35,15 @@ public class Cell {
 	public void setStatus(CellStatus status) {
 		this.status = status;
 	}
+
+	public Integer getBombsArround() {
+		return bombsArround;
+	}
+
+	public void setBombsArround(Integer bombsArround) {
+		this.bombsArround = bombsArround;
+	}
+	
 	
 	
 

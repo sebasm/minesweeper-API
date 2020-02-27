@@ -13,6 +13,7 @@ import com.challenge.minesweeper.dto.NewGameDto;
 import com.challenge.minesweeper.entity.Game;
 import com.challenge.minesweeper.mapper.GameDtoMapper;
 import com.challenge.minesweeper.service.GameService;
+import com.challenge.minesweeper.dto.EventDto;
 
 @RestController
 @RequestMapping(value = "/api/v1", produces = "application/json")
@@ -24,14 +25,18 @@ public class GameController {
 	@Autowired
 	GameDtoMapper gameDtoMapper;
 	
-	@RequestMapping(value = "/new-game", method = RequestMethod.POST)
+	@RequestMapping(value = "/games", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public GameDto newGame(@RequestBody(required = true) NewGameDto newGame) {
-
 		Game game = gameService.newGame(newGame.getPlayerName(), newGame.getSize(), newGame.getMines());
 		GameDto gameDto = gameDtoMapper.map(game);
 		return gameDto;
-
+	}
+	
+	@RequestMapping(value = "/games/{id}/events", method = RequestMethod.POST)
+	public GameDto clickEvent(@RequestBody(required = true) EventDto event) {
+		GameDto gameDto = gameDtoMapper.map(gameService.processEvent(event));
+		return gameDto;
 	}
 
 }

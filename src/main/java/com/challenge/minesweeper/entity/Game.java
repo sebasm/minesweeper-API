@@ -3,7 +3,14 @@ package com.challenge.minesweeper.entity;
 import java.util.Date;
 import java.util.UUID;
 
+import com.challenge.minesweeper.dto.EventDto;
+import com.challenge.minesweeper.entity.Cell.CellStatus;
+
 public class Game {
+	
+	public enum GameStatus {
+		CREATED, PLAYING, WON, LOST
+	}
 	
 	private UUID gameId;
 	private String playerName;
@@ -16,6 +23,22 @@ public class Game {
 		this.playerName = playerName;
 		this.board = new Board(size, mines);
 		this.creationTime = new Date();
+	}
+	
+	public void processEvent(EventDto event) {
+		switch (event.getEvent()) {
+		case LEFT_CLICK:
+			board.getCells().get(event.getRow()).get(event.getColumn()).setStatus(CellStatus.REVEALED);
+			break;
+			
+		case RIGHT_CLICK:
+			//TODO: implement logic for right click
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 	
 	public String getPlayerName() {
