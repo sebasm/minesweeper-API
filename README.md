@@ -32,5 +32,10 @@ Most of the logic is delegated into the business objects, at the moment the serv
 
 Since a major part of the logic is inside the entities, most of the test are also about them.
 
+#### About the Python client
+
+It still needs a lot of love. I'm quite new in python, I didn't know if makings classes for this case is ok (everyone says that in python classes are not encouraged), but I wanted to give the user the chance to maintain the connection configuration (URL) state.
+Also I don't have experience making libraries for third parts, and maybe there are a lot of good practices that I'm not aware of.
+
 
 
