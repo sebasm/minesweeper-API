@@ -68,7 +68,8 @@ public class GameDtoMapperTests {
 		
 		GameDto gameDto = mapper.map(testGame);
 		
-		//TODO: A board equals to expected should be created so we don't have to test each cell, also ensure a better coverage of all the board
+		//TODO: A board equals to expected should be created so we don't have to test each cell, 
+		// 		also ensure a better coverage of all the board
 		assertThat(gameDto.getBoard().getCells().get(0).get(2).getStatus().equals(CellStatus.REVEALED));
 		assertThat(gameDto.getBoard().getCells().get(5).get(3).getStatus().equals(CellStatus.EXPLODED));
 		

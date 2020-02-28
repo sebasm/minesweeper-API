@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.LinkedList;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -24,7 +25,8 @@ public class GameTests {
 	public Game testGame;
 	public Board cleanBoard;
 	
-	GameTests() {
+	@BeforeEach
+	private void initTestGame() {
 		
 		testGame = new Game("Test User", size, mines);
 		cleanBoard = new Board(size, 0);
