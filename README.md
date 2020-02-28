@@ -28,6 +28,9 @@ The POST to "/games/{id}/events" is used to handle the user interaction with the
 Both endpoints return a object of the type **GameDto**, it is mapped from the **Game** object that the services return.
 This decision was taken so we only show the fields that we want the client to see (eg: don't send mines positions).
 
+Most of the logic is delegated into the business objects, at the moment the service just makes a simple validation.
+
+Since a major part of the logic is inside the entities, most of the test are also about them.
 
 
 

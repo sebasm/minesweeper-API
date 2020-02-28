@@ -24,6 +24,7 @@ public class Game {
 		this.playerName = playerName;
 		this.board = new Board(size, mines);
 		this.creationTime = new Date();
+		this.status = GameStatus.CREATED;
 	}
 	
 	public void processEvent(EventDto event) {

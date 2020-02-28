@@ -9,6 +9,8 @@ import com.challenge.minesweeper.dto.CellDto;
 import com.challenge.minesweeper.dto.GameDto;
 import com.challenge.minesweeper.entity.Cell;
 import com.challenge.minesweeper.entity.Game;
+import com.challenge.minesweeper.entity.Cell.CellStatus;
+import com.challenge.minesweeper.entity.Game.GameStatus;
 
 @Component
 public class GameDtoMapper {
@@ -23,7 +25,13 @@ public class GameDtoMapper {
 		for(int i = 0; i < cells.size(); i++) {
 			cellsDto.add(new LinkedList<CellDto>());
 			for (int j = 0; j < cells.size(); j++) {
-				cellsDto.get(i).add(new CellDto(cells.get(i).get(j).getStatus()));
+				
+				// if game is lost, reveal all hidden mines, else keep them as they are
+				if(game.getStatus().equals(GameStatus.LOST)) {
+					mapGameLost(cells, cellsDto, i, j);
+				} else {
+					cellsDto.get(i).add(new CellDto(cells.get(i).get(j).getStatus()));
+				}
 			}
 		}
 		
@@ -38,6 +46,15 @@ public class GameDtoMapper {
 		gameDto.setStartTime(game.getStartTime());
 		
 		return gameDto;
+	}
+
+	private void mapGameLost(LinkedList<LinkedList<Cell>> cells, LinkedList<LinkedList<CellDto>> cellsDto, int i,
+			int j) {
+		if(cells.get(i).get(j).getHasBomb() && !cells.get(i).get(j).getStatus().equals(CellStatus.EXPLODED)) {
+			cellsDto.get(i).add(new CellDto(CellStatus.MINED));
+		} else {
+			cellsDto.get(i).add(new CellDto(cells.get(i).get(j).getStatus()));
+		}
 	}
 
 }
