@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.challenge.minesweeper.dto.GameDto;
 import com.challenge.minesweeper.dto.NewGameDto;
 import com.challenge.minesweeper.entity.Game;
+import com.challenge.minesweeper.exception.GameNotFoundException;
 import com.challenge.minesweeper.exception.TooManyMinesException;
 import com.challenge.minesweeper.mapper.GameDtoMapper;
 import com.challenge.minesweeper.service.GameService;
@@ -58,7 +59,13 @@ public class GameController {
 	@RequestMapping(value = "/games/{id}/events", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public GameDto clickEvent(@RequestBody(required = true) EventDto event, @PathVariable("id") String gameId) {
-		GameDto gameDto = gameDtoMapper.map(gameService.processEvent(gameId, event));
+		GameDto gameDto = null;
+		try {
+			gameDto = gameDtoMapper.map(gameService.processEvent(gameId, event));
+		} catch (GameNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+		
 		return gameDto;
 	}
 

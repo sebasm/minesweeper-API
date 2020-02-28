@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.challenge.minesweeper.dto.EventDto;
 import com.challenge.minesweeper.entity.Game;
+import com.challenge.minesweeper.exception.GameNotFoundException;
 import com.challenge.minesweeper.exception.TooManyMinesException;
 
 @Service
@@ -28,6 +29,9 @@ public class GameService {
 	public Game processEvent(String gameId, EventDto event) {
 		
 		Game game = games.get(gameId);
+		if(game == null) {
+			throw new GameNotFoundException("Game not found with the given id.");
+		}
 		game.processEvent(event);
 		
 		return game;
