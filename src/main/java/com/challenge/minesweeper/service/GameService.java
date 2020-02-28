@@ -32,6 +32,7 @@ public class GameService {
 		if(game == null) {
 			throw new GameNotFoundException("Game not found with the given id.");
 		}
+		//TODO: check if coordinates exceed matrix bounds
 		game.processEvent(event);
 		
 		return game;
