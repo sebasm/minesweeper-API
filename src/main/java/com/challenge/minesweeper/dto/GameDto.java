@@ -7,16 +7,16 @@ import com.challenge.minesweeper.entity.Board;
 
 public class GameDto {
 	
-	private UUID gameId;
+	private String gameId;
 	private String playerName;
 	private BoardDto board;
 	private Date creationTime;
 	private Date startTime;
 	
-	public UUID getGameId() {
+	public String getGameId() {
 		return gameId;
 	}
-	public void setGameId(UUID gameId) {
+	public void setGameId(String gameId) {
 		this.gameId = gameId;
 	}
 	public String getPlayerName() {

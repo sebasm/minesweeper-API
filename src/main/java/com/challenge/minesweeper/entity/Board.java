@@ -25,10 +25,11 @@ public class Board {
 		Integer remainingMinesToAssign = mines;
 		Random random = new Random();
 		while(remainingMinesToAssign > 0) {
-			int x = random.nextInt(size);
-			int y = random.nextInt(size);
-			if(!cells.get(x).get(y).getHasBomb()) {
-				cells.get(x).get(y).setHasBomb(true);
+			int row = random.nextInt(size);
+			int column = random.nextInt(size);
+			if(!cells.get(row).get(column).getHasBomb()) {
+				System.out.println("Row: " + row + " Column: " + column);
+				cells.get(row).get(column).setHasBomb(true);
 				remainingMinesToAssign--;
 			}
 		}

@@ -12,14 +12,15 @@ public class Game {
 		CREATED, PLAYING, WON, LOST
 	}
 	
-	private UUID gameId;
+	private String gameId;
 	private String playerName;
 	private Board board;
 	private Date creationTime;
 	private Date startTime;
+	private GameStatus status;
 	
 	public Game(String playerName, Integer size, Integer mines) {
-		this.gameId = UUID.randomUUID();
+		this.gameId = UUID.randomUUID().toString();
 		this.playerName = playerName;
 		this.board = new Board(size, mines);
 		this.creationTime = new Date();
@@ -28,17 +29,30 @@ public class Game {
 	public void processEvent(EventDto event) {
 		switch (event.getEvent()) {
 		case LEFT_CLICK:
-			board.getCells().get(event.getRow()).get(event.getColumn()).setStatus(CellStatus.REVEALED);
+			processLeftClick(event);
 			break;
 			
 		case RIGHT_CLICK:
-			//TODO: implement logic for right click
+			processRightClick(event);
 			break;
 
 		default:
 			break;
 		}
 		
+	}
+
+	private void processLeftClick(EventDto event) {
+		if(board.getCells().get(event.getRow()).get(event.getColumn()).getHasBomb()) {
+			board.getCells().get(event.getRow()).get(event.getColumn()).setStatus(CellStatus.EXPLODED);
+			status = GameStatus.LOST;
+		} else {
+			board.getCells().get(event.getRow()).get(event.getColumn()).setStatus(CellStatus.REVEALED);
+		}
+	}
+	
+	private void processRightClick(EventDto event) {
+		// TODO: make this happen
 	}
 	
 	public String getPlayerName() {
@@ -69,13 +83,23 @@ public class Game {
 		this.startTime = startTime;
 	}
 
-	public UUID getGameId() {
+	public String getGameId() {
 		return gameId;
 	}
 
-	public void setGameId(UUID gameId) {
+	public void setGameId(String gameId) {
 		this.gameId = gameId;
 	}
+
+	public GameStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(GameStatus status) {
+		this.status = status;
+	}
+
+	
 	
 	
 	

@@ -11,7 +11,9 @@ import com.challenge.minesweeper.dto.EventDto;
 import com.challenge.minesweeper.dto.EventDto.Event;
 import com.challenge.minesweeper.entity.Board;
 import com.challenge.minesweeper.entity.Cell;
+import com.challenge.minesweeper.entity.Cell.CellStatus;
 import com.challenge.minesweeper.entity.Game;
+import com.challenge.minesweeper.entity.Game.GameStatus;
 
 @SpringBootTest
 public class GameTests {
@@ -52,16 +54,19 @@ public class GameTests {
 	
 	@Test
 	public void clickOnBomb(){
+		EventDto event = new EventDto(2, 2, Event.LEFT_CLICK);
+		testGame.processEvent(event);
 		
-		
+		assertThat(testGame.getStatus().equals(GameStatus.LOST));
+		assertThat(testGame.getBoard().getCells().get(2).get(2).getStatus().equals(CellStatus.EXPLODED));
 	}
 	
-	
-	
+	@Test
 	public void flagCell(){
 		
 	}
 	
+	@Test
 	public void questionCell(){
 		
 	}

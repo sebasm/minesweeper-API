@@ -1,35 +1,34 @@
 package com.challenge.minesweeper.service;
 
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.challenge.minesweeper.dto.EventDto;
 import com.challenge.minesweeper.entity.Game;
+import com.challenge.minesweeper.exception.TooManyMinesException;
 
 @Service
 public class GameService {
 	
+	private Map<String, Game> games = new HashMap<String, Game>();
+	
 	
 	public Game newGame(String playerName, Integer size, Integer mines) {
-		UUID uuid = UUID.randomUUID();
+		if(mines >= size*size) {
+			throw new TooManyMinesException("Can't set more mines than cells.");
+		}
 		Game game = new Game(playerName, size, mines);
+		games.put(game.getGameId().toString(), game);
 		return game;
 		
 	}
 	
-	public Game processEvent(EventDto event) {
+	public Game processEvent(String gameId, EventDto event) {
 		
-		//get game from redis
-		//gameRepository.getGameById(UUId gameId);
-		
-		Game game = new Game("Name", 7, 7);
+		Game game = games.get(gameId);
 		game.processEvent(event);
-		
-		//save updated game to redis
-		//gameRepository.save(game);
-		
-		//Integer x = 4, Integer y = 3,  ClickType clickType
 		
 		return game;
 	}

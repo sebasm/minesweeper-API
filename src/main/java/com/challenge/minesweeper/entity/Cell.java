@@ -3,7 +3,7 @@ package com.challenge.minesweeper.entity;
 public class Cell {
 
 	public enum CellStatus {
-		INITIAL, REVEALED, FLAGGED, QUESTIONED
+		INITIAL, REVEALED, FLAGGED, QUESTIONED, EXPLODED, MINED
 	}
 
 	private Boolean hasBomb;
