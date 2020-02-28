@@ -53,7 +53,8 @@ public class GameController {
 		return gameDto;
 	}
 	
-	@ApiOperation(value = "Handles clicks on cells", notes = "This endpoint receives coordinates and type of click and returs the game and it's board with the new state.")
+	@ApiOperation(value = "Handles clicks on cells", notes = "This endpoint receives coordinates and type of click and returs the game and it's board with the new state."
+			+ "Allowed events are LEFT_CLICK and RIGHT_CLICK")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Event received and processes succesfully.")})
 	@RequestMapping(value = "/games/{id}/events", method = RequestMethod.POST)
